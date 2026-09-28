@@ -19,12 +19,13 @@ import androidx.compose.ui.unit.sp
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(modifier: Modifier = Modifier)
+{
     Box(
         modifier = Modifier.fillMaxSize()
             .background(Color(0xFFCE0432))
-            .padding(32.dp)
-    ) {
+            .padding(32.dp))
+    {
         Text(
             text = "Login",
             fontSize = 24.sp,
@@ -32,10 +33,10 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             color = Color.White
         )
         Button(
-            onClick = { /* Tudo */ },
+            onClick = { /* TODO */ },
             colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier.align(Alignment.Center)
-        ) {
+            modifier = Modifier.align(Alignment.Center))
+        {
             Text(
                 text = "ENTRAR",
                 fontSize = 20.sp,
