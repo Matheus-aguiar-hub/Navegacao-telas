@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -30,9 +34,27 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "login"
+                        startDestination = "login",
+                        enterTransition = {
+                            slideIntoContainer(
+                                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                                animationSpec = tween (1000)
+                            )
+                        },
+                        exitTransition = {
+                            slideOutOfContainer(
+                                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                                animationSpec = tween(1000)
+                            ) + fadeOut(animationSpec = tween(1000))
+                        }
                     ) {
-                        composable(route = "login") {
+                        composable(route = "login",
+                            exitTransition = {
+                                slideOutOfContainer(
+                                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                                    animationSpec = tween (1000)
+                                )
+                            }) {
                             LoginScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController
