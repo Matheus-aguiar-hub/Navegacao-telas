@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -45,13 +46,23 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable(route = "perfil/{nome}") { backStackEntry ->
+                        composable(route = "perfil/{nome}/{idade}",
+                            arguments = listOf(
+                                navArgument(name = "nome"){
+                                    type = NavType.StringType
+                                },
+                                navArgument(name = "idade"){
+                                    type = NavType.IntType
+                                }
+                            )) {
                             val nome = it.arguments?.getString("nome")
+                            val idade = it.arguments?.getInt("idade") // Corrigido de "nome" para "idade"
 
                             PerfilScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController,
-                                nome = nome.orEmpty()
+                                nome = nome!!,
+                                idade = idade!!
                             )
                         }
 
@@ -59,15 +70,17 @@ class MainActivity : ComponentActivity() {
                             route = "pedidos?numeroPedido={numeroPedido}",
                             arguments = listOf(
                                 navArgument(name = "numeroPedido") {
+                                    type = NavType.StringType // Adicionado para garantir o tipo
                                     defaultValue = "sem pedido"
                                 }
                             )
                         ) {
-                            val pedido = it.arguments?.getString("numeroPedido")
+                            val numeroPedido = it.arguments?.getString("numeroPedido")
 
                             PedidosScreen(
                                 modifier = Modifier.padding(innerPadding),
-                                navController = navController
+                                navController = navController,
+                                numeroPedido = numeroPedido!!
                             )
                         }
                     }
