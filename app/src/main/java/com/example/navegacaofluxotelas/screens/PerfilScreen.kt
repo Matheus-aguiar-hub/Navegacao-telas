@@ -16,10 +16,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
-@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun PerfilScreen(modifier: Modifier = Modifier)
+fun PerfilScreen(modifier: Modifier = Modifier,
+                 navController: NavController)
 {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -33,7 +34,7 @@ fun PerfilScreen(modifier: Modifier = Modifier)
             color = Color.White
         )
         Button(
-            onClick = { /* TODO */ },
+            onClick = { navController.navigate("perfil") },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier
                 .size(width = 200.dp, height = 48.dp)

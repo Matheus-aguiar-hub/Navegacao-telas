@@ -11,13 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.navegacaofluxotelas.screens.LoginScreen
 import com.example.navegacaofluxotelas.screens.MenuScreen
 import com.example.navegacaofluxotelas.screens.PedidosScreen
 import com.example.navegacaofluxotelas.screens.PerfilScreen
 import com.example.navegacaofluxotelas.ui.theme.NavegacaoFluxoTelasTheme
 
-//Control + option + o apaga todos os imports que nao utilizam
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +31,48 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = "login"
                     ) {
-                        composable (route = "login") { LoginScreen(
-                            modifier = Modifier.padding(innerPadding),
-                            navController = navController
-                        ) }
+                        composable(route = "login") {
+                            LoginScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController
+                            )
+                        }
 
-                        composable (route = "menu") { MenuScreen() }
+                        composable(route = "menu") {
+                            MenuScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController
+                            )
+                        }
 
-                        composable (route = "pedidos") { PerfilScreen() }
+                        composable(route = "perfil/{nome}") { backStackEntry ->
+                            val nome = it.arguments?.getString("nome")
 
-                        composable (route = "perfil") { PedidosScreen() }
+                            PerfilScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController,
+                                nome = nome.orEmpty()
+                            )
+                        }
+
+                        composable(
+                            route = "pedidos?numeroPedido={numeroPedido}",
+                            arguments = listOf(
+                                navArgument(name = "numeroPedido") {
+                                    defaultValue = "sem pedido"
+                                }
+                            )
+                        ) {
+                            val pedido = it.arguments?.getString("numeroPedido")
+
+                            PedidosScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
-
